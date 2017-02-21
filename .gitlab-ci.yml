@@ -15,7 +15,7 @@ after_script:
 copy_svarog:
   stage: copy_latest_jars
   script:
-    - git remote set-url origin git@gitlab.prtech.mk:prtech/common_jars.git
+    - git remote set-url origin git@gitlab.prtech.mk:prtech/common_libs.git
     - git fetch origin $CI_BUILD_REF_NAME
     - git reset --hard origin/$CI_BUILD_REF_NAME
     - git checkout $CI_BUILD_REF_NAME
