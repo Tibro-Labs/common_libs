@@ -30,3 +30,4 @@ copy_svarog:
       fi
   only:
     - master
+    - triggers
