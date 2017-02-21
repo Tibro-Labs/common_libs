@@ -22,9 +22,9 @@ copy_svarog:
     - git pull
     - |
       if [ -n "${JAR_TO_COPY}" ]; then
-        echo "new jar found `${JAR_TO_COPY}`"
-        cp /home/gitlab-runner/JARS/"${JAR_TO_COPY}" .
-        git add "${JAR_TO_COPY}"
+        echo "new jar found $JAR_TO_COPY"
+        cp /home/gitlab-runner/JARS/$JAR_TO_COPY .
+        git add $JAR_TO_COPY
         git commit -m "Push latest jar $JAR_TO_COPY" || exit 0
         git push origin HEAD:$CI_BUILD_REF_NAME
       fi
