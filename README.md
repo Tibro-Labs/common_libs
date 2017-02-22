@@ -1,3 +1,6 @@
+[![build status](https://gitlab.prtech.mk/prtech/common_libs/badges/master/build.svg)](https://gitlab.prtech.mk/prtech/common_libs/commits/master)
+
+
 ![Alt text](https://g.gravizo.com/g?
   digraph G {
     triglav_rest[shape="diamond", style=rounded]
