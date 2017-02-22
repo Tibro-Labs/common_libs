@@ -1,17 +1,18 @@
 ![Alt text](https://g.gravizo.com/g?
   digraph G {
-    aize ="4,4";
-    main [shape=box];
-    main -> parse [weight=8];
-    parse -> execute;
-    main -> init [style=dotted];
-    main -> cleanup;
-    execute -> { make_string; printf};
-    init -> make_string;
-    edge [color=red];
-    main -> printf [style=bold,label="100 times"];
-    make_string [label="make a string"];
-    node [shape=box,style=filled,color=".7 .3 1.0"];
-    execute -> compare;
+    triglav_rest[shape="diamond", style=rounded]
+    svarog_reports[shape="box", style=rounded]
+    stribog[shape="box", style=rounded]
+    afpzrr_sop_triglav_plugin[shape="box", style=rounded]
+    afsard_triglav_plugin[shape="box", style=rounded]
+    svarog -> svarog_reports[color="green"]
+    svarog -> stribog[color="green"]
+    svarog -> afpzrr_sop_triglav_plugin[color="green"]
+    svarog -> afsard_triglav_plugin[color="green"]
+    svarog -> triglav_rest[label="libs", color="red"]
+    svarog_reports -> triglav_rest[label="libs", color="red"]
+    stribog -> triglav_rest[label="libs", color="red"]
+    afpzrr_sop_triglav_plugin -> triglav_rest[label="plugins", color="blue"]
+    afsard_triglav_plugin -> triglav_rest[label="plugins", color="blue"]
   }
 )
