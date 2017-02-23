@@ -30,7 +30,7 @@ copy_jars:
         git commit -m "Push latest jar $JAR_TO_COPY" || exit 0
         git push origin HEAD:$CI_BUILD_REF_NAME
         echo "Trigger triglav_rest build"
-        curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=feature/gitlabci https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
+        curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=feature/triglavPluginExtender https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
         if [ "${JAR_TO_COPY}" == "svarog-2.0_dev.jar" ]; then
           echo "Trigger new builds dependant on ${JAR_TO_COPY}"
           # triglav
