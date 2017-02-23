@@ -4,11 +4,13 @@ stages:
 
 before_script:
   - git reset --hard HEAD
+  - git clean -fd
   - git stash
   - git pull origin $CI_BUILD_REF_NAME
 
 after_script:
   - git reset --hard HEAD
+  - git clean -fd
   - git stash
   - git pull origin $CI_BUILD_REF_NAME
 
