@@ -4,10 +4,10 @@
 ![Alt text](https://g.gravizo.com/g?
   digraph G {
     triglav_rest[shape="diamond", style=rounded]
-    svarog_reports[shape="box", style=rounded]
-    stribog[shape="box", style=rounded]
-    afpzrr_sop_triglav_plugin[shape="box", style=rounded]
-    afsard_triglav_plugin[shape="box", style=rounded]
+    svarog_reports[shape="box", style=rounded, color="orange"]
+    stribog[shape="box", style=rounded, color="orange"]
+    afpzrr_sop_triglav_plugin[shape="box", style=rounded, color="blue"]
+    afsard_triglav_plugin[shape="box", style=rounded, color="blue"]
     svarog -> svarog_reports[color="green"]
     svarog -> stribog[color="green"]
     svarog -> afpzrr_sop_triglav_plugin[color="green"]
