@@ -25,31 +25,33 @@ copy_jars:
     - |
       if [ -n "${JAR_TO_COPY}" ]; then
         echo "new jar found $JAR_TO_COPY"
-        cp /home/gitlab-runner/JARS/$JAR_TO_COPY .
+        cp /home/gitlab-runner/JARS/$CI_BUILD_REF_NAME/$JAR_TO_COPY .
         git add $JAR_TO_COPY
-        git commit -m "Push latest jar $JAR_TO_COPY" || exit 0
+        git commit -m "Push latest jar $JAR_TO_COPY for $CI_BUILD_REF_NAME branch" || exit 0
         git push origin HEAD:$CI_BUILD_REF_NAME
         echo "Trigger triglav_rest build"
-        curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=feature/triglavPluginExtender https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
+        curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
         if [ "${JAR_TO_COPY}" == "svarog-2.0_dev.jar" ]; then
           echo "Trigger new builds dependant on ${JAR_TO_COPY}"
           # triglav
           # echo "Trigger triglav_res"
-          # curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=master https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
+          # curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
           # stribog
           echo "Trigger stribog (batch executor)"
-          curl -X POST -F token=9423da9eeee5c7f64b313b4e6bb7cf -F ref=master https://gitlab.prtech.mk/api/v3/projects/139/trigger/builds
+          curl -X POST -F token=9423da9eeee5c7f64b313b4e6bb7cf -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/139/trigger/builds
           # svarog_reports
           echo "Trigger svarog_reports"
-          curl -X POST -F token=699352edfed845aa367dd24cf88477 -F ref=master https://gitlab.prtech.mk/api/v3/projects/126/trigger/builds
+          curl -X POST -F token=699352edfed845aa367dd24cf88477 -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/126/trigger/builds
           # afpzrr_sop_triglav_plugin
           echo "Trigger afpzrr_sop_triglav_plugin"
-          curl -X POST -F token=bd27061b4d842d141f4a4804f5fa9a -F ref=master https://gitlab.prtech.mk/api/v3/projects/156/trigger/builds
+          curl -X POST -F token=bd27061b4d842d141f4a4804f5fa9a -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/156/trigger/builds
           # afsard_triglav_plugin
           echo "Trigger afsard_triglav_plugin"
-          curl -X POST -F token=b8080304aadfb6b59e8bd178e4d5fa -F ref=master https://gitlab.prtech.mk/api/v3/projects/155/trigger/builds
+          curl -X POST -F token=b8080304aadfb6b59e8bd178e4d5fa -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/155/trigger/builds
         fi
       fi
   only:
     - master
+    - staging
+    - dev
     - triggers
