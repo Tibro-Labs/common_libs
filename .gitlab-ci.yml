@@ -27,7 +27,7 @@ copy_jars:
         echo "new jar found $JAR_TO_COPY"
         cp /home/gitlab-runner/JARS/$CI_BUILD_REF_NAME/$JAR_TO_COPY .
         git add $JAR_TO_COPY
-        git commit -m "Push latest jar $JAR_TO_COPY for $CI_BUILD_REF_NAME branch" || exit 0
+        git commit -m "Push latest jar $JAR_TO_COPY for branch $CI_BUILD_REF_NAME" || exit 0
         git push origin HEAD:$CI_BUILD_REF_NAME
         echo "Trigger triglav_rest build"
         curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
