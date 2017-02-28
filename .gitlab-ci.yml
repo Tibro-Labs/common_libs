@@ -21,6 +21,7 @@ copy_jars:
     - git fetch origin $CI_BUILD_REF_NAME
     - git reset --hard origin/$CI_BUILD_REF_NAME
     - git checkout $CI_BUILD_REF_NAME
+    - git clean -df
     - git pull
     - |
       if [ -n "${JAR_TO_COPY}" ]; then

@@ -1,6 +1,3 @@
-[![build status](https://gitlab.prtech.mk/prtech/common_libs/badges/master/build.svg)](https://gitlab.prtech.mk/prtech/common_libs/commits/master)
-
-
 ![Alt text](https://g.gravizo.com/g?
   digraph G {
     triglav_rest[shape="diamond", style=rounded]
@@ -19,3 +16,20 @@
     afsard_triglav_plugin -> triglav_rest[label="plugins", color="blue"]
   }
 )
+
+
+###### Buiild status for branch:
+ - Master:
+   - [![build status](https://gitlab.prtech.mk/prtech/common_libs/badges/master/build.svg)](https://gitlab.prtech.mk/prtech/common_libs/commits/master)
+ - Staging:
+   - [![build status](https://gitlab.prtech.mk/prtech/common_libs/badges/staging/build.svg)](https://gitlab.prtech.mk/prtech/common_libs/commits/staging)
+ - Dev:
+   - [![build status](https://gitlab.prtech.mk/prtech/common_libs/badges/dev/build.svg)](https://gitlab.prtech.mk/prtech/common_libs/commits/dev)
+
+### Git; Branch and Stability Info
+Source control is `Git` exclusive:
+
+* The `master` branch is updated only from the current state of the `staging` branch
+* The `staging` branch must only be updated with commits from the `dev` branch
+* The `dev` branch contains all the latest additions to the project
+* All larger feature updates must be developed in their own branch and later merged into `dev`
