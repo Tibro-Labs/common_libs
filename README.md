@@ -5,6 +5,8 @@
     stribog[shape="box", style=rounded, color="orange"]
     afpzrr_sop_triglav_plugin[shape="box", style=rounded, color="blue"]
     afsard_triglav_plugin[shape="box", style=rounded, color="blue"]
+    svarog_custom_afsard_dp[shape="box", style=rounded, color="brown"]
+    svarog_custom_afsard_dp -> svarog[label="custom", color="blue"]
     svarog -> svarog_reports[color="green"]
     svarog -> stribog[color="green"]
     svarog -> afpzrr_sop_triglav_plugin[color="green"]
@@ -16,7 +18,6 @@
     afsard_triglav_plugin -> triglav_rest[label="plugins", color="blue"]
   }
 )
-
 
 ###### Buiild status for branch:
  - Master:
