@@ -1,3 +1,7 @@
+![](https://gitlab.prtech.mk/prtech/gitlab-ci/raw/master/img/PERUNTECH_PIPELINE.png)
+
+
+
 ![Alt text](https://g.gravizo.com/g?
   digraph G {
     triglav_rest[shape="diamond", style=rounded]
