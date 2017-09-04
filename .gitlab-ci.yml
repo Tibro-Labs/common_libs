@@ -24,7 +24,7 @@ copy_jars:
     - |
       if [ -n "${JAR_TO_COPY}" ]; then
         echo "new jar found $JAR_TO_COPY"
-        if [[ ${JAR_TO_COPY} =~ "svarog-2.1."+[0-9]+"-"+[0-9]+".jar" ]];
+        if [[ ${JAR_TO_COPY} =~ "svarog-2.1."+[0-9]+"-"+[0-9]+".jar" ]] || [[ ${JAR_TO_COPY} =~ "svarog-2."+[0-9]+"_dev" ]];
           then
             git rm svarog-2.* || true
             cp /home/gitlab-runner/JARS/$CI_COMMIT_REF_NAME/$JAR_TO_COPY .
