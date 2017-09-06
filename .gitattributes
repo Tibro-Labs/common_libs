@@ -22,3 +22,6 @@
 *.dbf binary
 *.shx binary
 *.class binary
+
+
+*.jar merge=ours
