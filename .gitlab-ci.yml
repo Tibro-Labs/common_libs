@@ -5,50 +5,52 @@ stages:
 before_script:
   - git reset --hard HEAD
   - git clean -fd
-  - git stash
-  - git pull origin $CI_BUILD_REF_NAME
+  - git pull origin $CI_COMMIT_REF_NAME
 
 after_script:
   - git reset --hard HEAD
   - git clean -fd
-  - git stash
-  - git pull origin $CI_BUILD_REF_NAME
+  - git pull origin $CI_COMMIT_REF_NAME
 
 copy_jars:
   stage: copy_latest_jars
   script:
     - git remote set-url origin git@gitlab.prtech.mk:prtech/common_libs.git
-    - git fetch origin $CI_BUILD_REF_NAME
-    - git reset --hard origin/$CI_BUILD_REF_NAME
-    - git checkout $CI_BUILD_REF_NAME
+    - git fetch origin $CI_COMMIT_REF_NAME
+    - git reset --hard origin/$CI_COMMIT_REF_NAME
+    - git checkout $CI_COMMIT_REF_NAME
     - git clean -df
     - git pull
     - |
       if [ -n "${JAR_TO_COPY}" ]; then
         echo "new jar found $JAR_TO_COPY"
-        cp /home/gitlab-runner/JARS/$CI_BUILD_REF_NAME/$JAR_TO_COPY .
-        git add $JAR_TO_COPY
-        git commit -m "Push latest jar $JAR_TO_COPY for branch $CI_BUILD_REF_NAME" || exit 0
-        git push origin HEAD:$CI_BUILD_REF_NAME
-        echo "Trigger triglav_rest build"
-        curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
-        if [ "${JAR_TO_COPY}" == "svarog-2.0_dev.jar" ]; then
-          echo "Trigger new builds dependant on ${JAR_TO_COPY}"
-          # triglav
-          # echo "Trigger triglav_res"
-          # curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds
-          # stribog
-          echo "Trigger stribog (batch executor)"
-          curl -X POST -F token=9423da9eeee5c7f64b313b4e6bb7cf -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/139/trigger/builds
-          # svarog_reports
-          echo "Trigger svarog_reports"
-          curl -X POST -F token=699352edfed845aa367dd24cf88477 -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/126/trigger/builds
-          # afpzrr_sop_triglav_plugin
-          echo "Trigger afpzrr_sop_triglav_plugin"
-          curl -X POST -F token=bd27061b4d842d141f4a4804f5fa9a -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/156/trigger/builds
-          # afsard_triglav_plugin
-          echo "Trigger afsard_triglav_plugin"
-          curl -X POST -F token=b8080304aadfb6b59e8bd178e4d5fa -F ref=$CI_BUILD_REF_NAME https://gitlab.prtech.mk/api/v3/projects/155/trigger/builds
+        if [[ ${JAR_TO_COPY} =~ "svarog-2.1."+[0-9]+"-"+[0-9]+".jar" ]] || [[ ${JAR_TO_COPY} =~ "svarog-2."+[0-9]+"_dev" ]];
+          then
+            git rm svarog-2.* || true
+            cp /home/gitlab-runner/JARS/$CI_COMMIT_REF_NAME/$JAR_TO_COPY .
+            git add $JAR_TO_COPY
+            git commit -m "Push latest SVAROG $JAR_TO_COPY for branch $CI_COMMIT_REF_NAME [ci_skip]" || exit 0
+            git push origin HEAD:$CI_COMMIT_REF_NAME
+            echo "Trigger new builds dependant on ${JAR_TO_COPY}"
+            # stribog
+            echo "Trigger stribog (batch executor)"
+            curl -X POST -F token=9423da9eeee5c7f64b313b4e6bb7cf -F ref=$CI_COMMIT_REF_NAME https://gitlab.prtech.mk/api/v3/projects/139/trigger/builds
+            # svarog_reports
+            echo "Trigger svarog_reports"
+            curl -X POST -F token=699352edfed845aa367dd24cf88477 -F ref=$CI_COMMIT_REF_NAME https://gitlab.prtech.mk/api/v3/projects/126/trigger/builds
+            # afpzrr_sop_triglav_plugin
+            echo "Trigger afpzrr_sop_triglav_plugin"
+            curl -X POST -F token=bd27061b4d842d141f4a4804f5fa9a -F ref=$CI_COMMIT_REF_NAME https://gitlab.prtech.mk/api/v3/projects/156/trigger/builds
+            # afsard_triglav_plugin
+            echo "Trigger afsard_triglav_plugin"
+            curl -X POST -F token=b8080304aadfb6b59e8bd178e4d5fa -F ref=$CI_COMMIT_REF_NAME https://gitlab.prtech.mk/api/v3/projects/155/trigger/builds
+          else
+            cp /home/gitlab-runner/JARS/$CI_COMMIT_REF_NAME/$JAR_TO_COPY .
+            git add $JAR_TO_COPY
+            git commit -m "Push latest jar $JAR_TO_COPY for branch $CI_COMMIT_REF_NAME [ci_skip]" || exit 0
+            git push origin HEAD:$CI_COMMIT_REF_NAME
+            echo "Trigger triglav_rest build";
+            curl -X POST -F token=c30959fb582ed4bf3740a6b7c6dd56 -F ref=$CI_COMMIT_REF_NAME https://gitlab.prtech.mk/api/v3/projects/135/trigger/builds;
         fi
       fi
   only:
